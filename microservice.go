@@ -1,30 +1,22 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"github.com/joho/godotenv"
 	"github.com/thearyanahmed/cloud-native-dummy/api"
-	"log"
 	"net/http"
 	"os"
 )
 
 func main () {
 
-	fmt.Println("Starting server")
-
-	err := godotenv.Load()
-
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
+	fmt.Println("[+] Starting server")
 
 	http.HandleFunc("/",index)
 	http.HandleFunc("/api/books",api.Books)
 
 
-	fmt.Println("Listening to server.Running on port => " + port())
+	fmt.Println("[+] Listening to server.Running on port => " + port())
 
 	res := http.ListenAndServe(port(), nil)
 
@@ -34,10 +26,8 @@ func main () {
 func port()  string {
 	port := os.Getenv("PORT")
 
-	fmt.Println("GOT ENV PORT",port)
-
-	if port == "" {
-		port = "8080"
+	if len(port) == 0 {
+		port = "9988"
 	}
 
 	return ":" + port
@@ -45,6 +35,9 @@ func port()  string {
 
 
 func index(w http.ResponseWriter,r *http.Request)  {
+	res, _ := json.Marshal("Hello world from 'go container'.")
+
 	w.WriteHeader(http.StatusOK)
-	_, _ = fmt.Fprintf(w, "Index struct")
+	w.Header().Add("Content-Type","application/json, charset=utf-8")
+	_, _ = w.Write(res)
 }

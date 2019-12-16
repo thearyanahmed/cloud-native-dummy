@@ -1,14 +1,9 @@
-FROM golang:1.8-alpine
+FROM alpine:3.5
 
-ENV SOURCES /go/src/github.com/thearyanahmed/cloud-native-dummy
+COPY ./microservice-with-go /app/microservice-with-go
+RUN chmod +x /app/microservice-with-go
 
-COPY . ${SOURCES}
+ENV PORT 9988
+EXPOSE 9988
 
-RUN cd ${SOURCES} && CGO_ENABLED=0 go install
-
-ENV PORT 8080
-
-EXPOSE 8080
-
-ENTRYPOINT microservice-with-go
-
+ENTRYPOINT /app/microservice-with-go
