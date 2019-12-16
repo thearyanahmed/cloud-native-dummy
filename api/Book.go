@@ -1,7 +1,8 @@
-package Book
+package api
 
 import (
 	json2 "encoding/json"
+	"net/http"
 )
 
 /**
@@ -59,3 +60,17 @@ func JsonDecode(json []byte) Book {
 func GetBookList() []Book {
 	return BookList
 }
+
+
+func Books (w http.ResponseWriter, r *http.Request) {
+
+	books , err := json2.Marshal(BookList)
+
+	if err != nil {
+		panic(err)
+	}
+	//w.WriteHeader(http.StatusOK)
+	w.Header().Add("Content-Type","application/json; charset=utf-8")
+	_, _ = w.Write(books)
+}
+

@@ -1,16 +1,16 @@
 package main
 
 import (
-	"./api/Controllers"
 	"fmt"
 	"net/http"
 	"os"
+	"api"
 )
 
 func main () {
 
 	http.HandleFunc("/",index)
-	http.HandleFunc("/api/books",Controllers.Books)
+	http.HandleFunc("/api/books",api.Books)
 
 
 	fmt.Println("Listening to server.Running on port : " + port())
@@ -23,7 +23,7 @@ func port()  string {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		port = "8000"
+		port = "8080"
 	}
 
 	return ":" + port
@@ -32,5 +32,5 @@ func port()  string {
 
 func index(w http.ResponseWriter,r *http.Request)  {
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w,"Index struct")
+	_, _ = fmt.Fprintf(w, "Index struct")
 }
