@@ -1,6 +1,7 @@
 package main
 
 import (
+	"./api/Controllers"
 	"fmt"
 	"net/http"
 	"os"
@@ -9,15 +10,19 @@ import (
 func main () {
 
 	http.HandleFunc("/",index)
-	fmt.Println("Listening to server")
-	res := http.ListenAndServe(port(), nil)
-	fmt.Println(res)
+	http.HandleFunc("/api/books",Controllers.Books)
+
+
+	fmt.Println("Listening to server.Running on port : " + port())
+
+	_ = http.ListenAndServe(port(), nil)
+
 }
 
 func port()  string {
 	port := os.Getenv("PORT")
 
-	if port != "" {
+	if port == "" {
 		port = "8000"
 	}
 
