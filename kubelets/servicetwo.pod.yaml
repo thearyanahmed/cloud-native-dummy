@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: micro-two
+  labels:
+    language: go
+    env: test
+
+spec:
+  containers:
+    - name: microservice
+      image: thearyanahmed/cloud-native-dummy:2.0.2
+      ports:
+        - containerPort: 8877
+          protocol: TCP

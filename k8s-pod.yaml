@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-v1
+  labels:
+    language: go
+    env: test
+
+spec:
+  containers:
+    - name: microservice
+      image: thearyanahmed/cloud-native-dummy:2.0.1
+      ports:
+        - containerPort: 9988
+          protocol: TCP
+  containers:
+    - name: just-service
+      image: thearyanahmed/cloud-native-dummy:2.0.2
+      ports:
+        - containerPort: 8877
+          protocol: TCP

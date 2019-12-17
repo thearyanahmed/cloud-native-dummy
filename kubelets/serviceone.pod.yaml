@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: micro-one
+  labels:
+    language: go
+    env: test
+
+spec:
+  containers:
+    - name: microservice
+      image: thearyanahmed/cloud-native-dummy:2.0.1
+      ports:
+        - containerPort: 9988
+          protocol: TCP
